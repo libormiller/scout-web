@@ -10,9 +10,9 @@
     </li>
     <li>
       <!-- svelte-ignore a11y-missing-attribute -->
-      <a>
+      <a href="/dashboard/map">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-        Item 1
+        mapa
       </a>
     </li>
     <li>
@@ -25,7 +25,7 @@
   </ul>
 </div>
 <div class="container max-w-full ">
-<div class="bg-base-200 rounded-box shadow-xl p-2">
+<div class="bg-base-200 rounded-box shadow-xl relative">
 <slot />
 </div>
 </div>

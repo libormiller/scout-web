@@ -38,6 +38,7 @@
   },
   "type": "module",
   "dependencies": {
+    "@maptiler/sdk": "^1.0.8",
     "pocketbase": "^0.9.1"
   }
 }
