@@ -4,7 +4,8 @@
   import '../app.postcss'
 </script>
 
-<div class="px-8 py-8">
+
+<div class="px-8 py-8 ">
   <div class="navbar bg-base-200 rounded-lg shadow-xl max-w-full ">
     <div class="flex-1">
       <a href="/" class="btn btn-ghost text-xl font-bold text-indigo-500">Project scout</a>
