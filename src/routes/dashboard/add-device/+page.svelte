@@ -11,7 +11,7 @@ let deviceID: number;
         try {
             const writeNewDevice = await pb.collection('devices').create(data);
         } catch (error) {
-            console.log(error);
+            alert(error);
         }
         
 

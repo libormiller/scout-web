@@ -17,4 +17,5 @@ const map = new maptilersdk.Map({
 });
 })
 
+
 </script>
