@@ -7,8 +7,9 @@
     import '@maptiler/sdk/dist/maptiler-sdk.css';
     import * as maptilersdk from '@maptiler/sdk';
     import { onDestroy, onMount } from 'svelte'
+    import { MAP_TILER_KEY } from '$env/static/private'
 onMount(() => {
-    maptilersdk.config.apiKey = '1u8lfP83zI2kKFvJZOvA';
+    maptilersdk.config.apiKey = MAP_TILER_KEY;
 const map = new maptilersdk.Map({
     container: 'map', // container's id or the HTML element in which SDK will render the map
     style: maptilersdk.MapStyle.STREETS,
