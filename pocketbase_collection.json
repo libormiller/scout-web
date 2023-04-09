@@ -89,11 +89,90 @@
                 }
             }
         ],
-        "listRule": "user = @request.auth.id",
-        "viewRule": "user = @request.auth.id",
+        "listRule": "@request.auth.id = user.id",
+        "viewRule": "@request.auth.id = user.id",
+        "createRule": "@request.auth.id != \"\" && @request.auth.id = @request.data.user",
+        "updateRule": "@request.auth.id = user.id",
+        "deleteRule": "@request.auth.id = user.id",
+        "options": {}
+    },
+    {
+        "id": "ejttb02ksygsdmy",
+        "name": "devicesData",
+        "type": "base",
+        "system": false,
+        "schema": [
+            {
+                "id": "ca8noote",
+                "name": "device",
+                "type": "relation",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {
+                    "collectionId": "g913t9wkklpnqmv",
+                    "cascadeDelete": false,
+                    "minSelect": null,
+                    "maxSelect": 1,
+                    "displayFields": [
+                        "deviceID"
+                    ]
+                }
+            },
+            {
+                "id": "efumiqvk",
+                "name": "latitude",
+                "type": "number",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {
+                    "min": null,
+                    "max": null
+                }
+            },
+            {
+                "id": "uxffm8wa",
+                "name": "longitude",
+                "type": "number",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {
+                    "min": null,
+                    "max": null
+                }
+            },
+            {
+                "id": "rklvxggr",
+                "name": "bat",
+                "type": "number",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {
+                    "min": null,
+                    "max": null
+                }
+            },
+            {
+                "id": "mwfwywbv",
+                "name": "time",
+                "type": "number",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {
+                    "min": null,
+                    "max": null
+                }
+            }
+        ],
+        "listRule": "@request.auth.id = device.user.id",
+        "viewRule": "@request.auth.id = device.user.id",
         "createRule": "",
-        "updateRule": "user = @request.auth.id",
-        "deleteRule": "user = @request.auth.id",
+        "updateRule": "@request.auth.id = device.user.id",
+        "deleteRule": "@request.auth.id = device.user.id",
         "options": {}
     }
 ]

@@ -17,7 +17,7 @@ let deviceID: number;
 
     }
 </script>
-
+<div class="py-4">
 <div class="container max-w-md mx-auto">
   <h1>Přidat zařízení</h1>
     <form on:submit|preventDefault={newDevice}>
@@ -27,3 +27,4 @@ let deviceID: number;
     </div>
     </form>
   </div>
+</div>
