@@ -8,11 +8,8 @@ export const load = (async ({ params }) => {
   try {
     const records = await pb.collection('devicesData').getFullList(undefined,{
       filter: "device.deviceID =".concat(mapParamID),
+      sort: "-created"
   });
-
-  const latestRecord = await pb.collection('devicesData').getList(1,1, {
-    sort: 'created'
-  })
 
   console.log(records)
   return {

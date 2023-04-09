@@ -5,22 +5,28 @@
 
   export let data
 
-type geojson = {
-    name: 'Track',
-    type: 'FeatureCollection',
+  let latestPosition: maptilersdk.LngLatLike = [
+    Number(data.records[0].longitude),
+    Number(data.records[0].latitude),
+  ]
+  console.log(latestPosition)
+
+  type geojson = {
+    name: 'Track'
+    type: 'FeatureCollection'
     features: [
       {
-        type: 'Feature',
+        type: 'Feature'
         geometry: {
-          type: 'LineString',
-          coordinates: number[][],
-        },
-        properties: null,
-      },
-    ],
+          type: 'LineString'
+          coordinates: number[][]
+        }
+        properties: null
+      }
+    ]
   }
 
-let mygeojson: geojson = {
+  let mygeojson: geojson = {
     name: 'Track',
     type: 'FeatureCollection',
     features: [
@@ -35,12 +41,10 @@ let mygeojson: geojson = {
     ],
   }
 
-
   data.records?.forEach(function (value) {
-    const latitude:number = Number(value.latitude)
-    const longitude:number = Number(value.longitude)
-    console.log(value.latitude, value.longitude)    
-    mygeojson.features[0].geometry.coordinates.push([latitude,longitude]);
+    const latitude: number = Number(value.latitude)
+    const longitude: number = Number(value.longitude)
+    mygeojson.features[0].geometry.coordinates.push([longitude, latitude])
   })
 
   //console.log(mygeojson)
@@ -48,26 +52,28 @@ let mygeojson: geojson = {
     maptilersdk.config.apiKey = '1u8lfP83zI2kKFvJZOvA'
     const map = new maptilersdk.Map({
       container: 'map', // container's id or the HTML element in which SDK will render the map
-      style: maptilersdk.MapStyle.STREETS,
-      center: [16.62662018, 49.2125578], // starting position [lng, lat]
+      style: maptilersdk.MapStyle.OUTDOOR,
+      center: latestPosition, // starting position [lng, lat]
       zoom: 14, // starting zoom
     })
-    map.on('load', async function () {
+
+    map.on('load', async function() {
+      const geojson = await mygeojson;
       map.addSource('gps_tracks', {
-        type: 'geojson',
-        data: mygeojson,
-      })
-    })
-    map.addLayer({
-      id: 'grand_teton',
-      type: 'line',
-      source: 'gps_tracks',
-      layout: {},
-      paint: {
-        'line-color': '#e11',
-        'line-width': 4,
-      },
-    })
+        'type': 'geojson',
+        'data': geojson
+      });
+      map.addLayer({
+        'id': 'grand_teton',
+        'type': 'line',
+        'source': 'gps_tracks',
+        'layout': {},
+        'paint': {
+          'line-color': '#e11',
+          'line-width': 4
+        }
+      });
+    });
   })
 </script>
 
