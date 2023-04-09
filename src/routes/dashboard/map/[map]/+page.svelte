@@ -4,11 +4,15 @@
   import { onDestroy, onMount } from 'svelte'
 
   export let data
+  let latestPosition: maptilersdk.LngLatLike
 
-  let latestPosition: maptilersdk.LngLatLike = [
+
+    latestPosition = [
     Number(data.records[0].longitude),
     Number(data.records[0].latitude),
   ]
+
+
   console.log(latestPosition)
 
   type geojson = {
@@ -56,7 +60,6 @@
       center: latestPosition, // starting position [lng, lat]
       zoom: 14, // starting zoom
     })
-
     map.on('load', async function() {
       const geojson = await mygeojson;
       map.addSource('gps_tracks', {
@@ -75,6 +78,8 @@
       });
     });
   })
+
+ 
 </script>
 
 <div class="rounded-box p-2 bg-gradient-to-r from-indigo-500 to-fuchsia-500">
