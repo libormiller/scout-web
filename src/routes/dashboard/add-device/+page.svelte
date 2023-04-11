@@ -23,7 +23,7 @@ let deviceID: number;
     <form on:submit|preventDefault={newDevice}>
         <div class="form-control gap-2 mb-4">
       <input type="number" class="input input-bordered" placeholder="ID zařízení 0-255" bind:value={deviceID}/>
-      <button type="submit" class="btn btn-primary max-w-fit">Přidat</button>
+      <button type="submit" class="btn btn-primary max-w-fit" >Přidat</button>
     </div>
     </form>
   </div>
