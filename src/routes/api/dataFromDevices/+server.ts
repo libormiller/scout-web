@@ -40,30 +40,35 @@ export const POST = async ({ request }) => {
     //odstraní případné mezery v binárním kódu 
     deviceData.payload = deviceData.payload.replace(/\s/g, "")
 
+    /* roztřízení dat po bytech do pole */
     const arrayOfBytesString = deviceData.payload.match(/.{1,8}/g)
 
+ /*    převod dat v poli z formátu string na číslo  */
     arrayOfBytesString?.forEach(function (value: string) {
         arrayOfBytesBIN.push(Number("0b".concat(value)))
     })
 
+    //vložení dat z pole do proměnných
     payloadFromDevice.ID = arrayOfBytesBIN[0];
     payloadFromDevice.battery = arrayOfBytesBIN[50];
     payloadFromDevice.temperature = arrayOfBytesBIN[51];
 
+    //odstranění uložených dat z původního pole
     arrayOfBytesBIN.splice(51, 1);
     arrayOfBytesBIN.splice(50, 1);
     arrayOfBytesBIN.splice(0, 1);
 
-
+    //rozkódování čísel na znaky ASCII
     arrayOfBytesBIN.forEach(function (value: number) {
         arrayOfGNGLL.push(String.fromCharCode(value))
     })
 
+    //rozdělení GNGLL zprávy do pole
     const GNGLLmessageparsedByComma = arrayOfGNGLL.join("").split(",");
 
     const record = await pb.collection('devices').getFullList(1, {filter: 'deviceID = '.concat(payloadFromDevice.ID.toString())});
 
-
+    //vložení GNGLL zprávy do náležitých proměnných
     payloadFromDevice.GNGLL = {
         header: GNGLLmessageparsedByComma[0],
         lat: Number(GNGLLmessageparsedByComma[1].replace(".",""))/1000000,
@@ -77,8 +82,9 @@ export const POST = async ({ request }) => {
 
     console.log(record)
 
+//Data ve formátu ve kterém se uloží do databáze
     const data = {
-        "device":"rur3h8hp0wy5dl1"/*  payloadFromDevice.ID */,
+        "device":payloadFromDevice.ID,
         "latitude": payloadFromDevice.GNGLL.lat,
         "longitude": payloadFromDevice.GNGLL.lon,
         "bat": payloadFromDevice.battery,
@@ -88,9 +94,13 @@ export const POST = async ({ request }) => {
 
 
     try {
+        //ukládání do databáze
             const record = await pb.collection('devicesData').create(data); 
+
+        //pokud se data uloží vratí se status 200 OK    
             return new Response(undefined, { status: 200 })        
     } catch (error) {
+        //pokud se data neuloží vrátí status 400 ERROR
         return new Response(JSON.stringify(error), {status: 400});
     }
 
