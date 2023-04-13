@@ -56,10 +56,10 @@
   onMount(() => {
     maptilersdk.config.apiKey = PUBLIC_MAP_TILER_KEY
     const map = new maptilersdk.Map({
-      container: 'map', // container's id or the HTML element in which SDK will render the map
+      container: 'map', 
       style: maptilersdk.MapStyle.OUTDOOR,
-      center: latestPosition, // starting position [lng, lat]
-      zoom: 14, // starting zoom
+      center: latestPosition, 
+      zoom: 14, 
     })
     map.on('load', async function() {
       const geojson = await mygeojson;
