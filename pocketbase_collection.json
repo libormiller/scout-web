@@ -186,5 +186,37 @@
         "updateRule": "@request.auth.id = user.id",
         "deleteRule": "@request.auth.id = user.id",
         "options": {}
+    },
+    {
+        "id": "tw1vp2tfqbm1elp",
+        "name": "pictures",
+        "type": "base",
+        "system": false,
+        "schema": [
+            {
+                "id": "d8mxkcyh",
+                "name": "picture",
+                "type": "file",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {
+                    "maxSelect": 1,
+                    "maxSize": 5242880,
+                    "mimeTypes": [
+                        "image/jpeg",
+                        "image/png",
+                        "image/svg+xml"
+                    ],
+                    "thumbs": []
+                }
+            }
+        ],
+        "listRule": "",
+        "viewRule": "",
+        "createRule": null,
+        "updateRule": null,
+        "deleteRule": null,
+        "options": {}
     }
 ]
