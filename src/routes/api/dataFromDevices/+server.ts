@@ -1,7 +1,7 @@
 import type { RequestHandler } from '@sveltejs/kit';
 import { pb } from "$lib/pocketbase"
 import { PUBLIC_POCKETBASE_URL } from '$env/static/public';
-import { POCKETBASE_ADMIN_EMAIL, POCKETBASE_ADMIN_PASSWD } from '$env/static/private';
+import { POCKETBASE_API_ID, POCKETBASE_API_PASSWD } from '$env/static/private';
 
 //definice formátu pro data přicházející z gatewaye
 type jsonBodyFromGateway = {
@@ -25,13 +25,13 @@ type GNGLLmessage = {
     latDir: string,
     lon: number,
     lonDir: string,
-    utc:number,
+    utc: number,
     dataStatus: string,
     modeInd: string
 }
 //definice pro http metodu POST
 export const POST = async ({ request }) => {
-    pb.admins.authWithPassword(POCKETBASE_ADMIN_EMAIL, POCKETBASE_ADMIN_PASSWD)
+    const authData = await pb.collection('users').authWithPassword(POCKETBASE_API_ID, POCKETBASE_API_PASSWD );
     let payloadFromDevice = {} as payloadData;
     let deviceData: jsonBodyFromGateway = await request.json()
     let arrayOfBytesBIN: number[] = [];
@@ -43,7 +43,7 @@ export const POST = async ({ request }) => {
     /* roztřízení dat po bytech do pole */
     const arrayOfBytesString = deviceData.payload.match(/.{1,8}/g)
 
- /*    převod dat v poli z formátu string na číslo  */
+    /*    převod dat v poli z formátu string na číslo  */
     arrayOfBytesString?.forEach(function (value: string) {
         arrayOfBytesBIN.push(Number("0b".concat(value)))
     })
@@ -66,25 +66,25 @@ export const POST = async ({ request }) => {
     //rozdělení GNGLL zprávy do pole
     const GNGLLmessageparsedByComma = arrayOfGNGLL.join("").split(",");
 
-    const record = await pb.collection('devices').getFullList(1, {filter: 'deviceID = '.concat(payloadFromDevice.ID.toString())});
+    const record = await pb.collection('devices').getFullList( 1, { filter: 'deviceID = '.concat(payloadFromDevice.ID.toString()) } );
+    console.log()
 
     //vložení GNGLL zprávy do náležitých proměnných
     payloadFromDevice.GNGLL = {
         header: GNGLLmessageparsedByComma[0],
-        lat: Number(GNGLLmessageparsedByComma[1].replace(".",""))/1000000,
+        lat: Number(GNGLLmessageparsedByComma[1].replace(".", "")) / 1000000,
         latDir: GNGLLmessageparsedByComma[2],
-        lon: Number(GNGLLmessageparsedByComma[3].replace(".",""))/1000000,
+        lon: Number(GNGLLmessageparsedByComma[3].replace(".", "")) / 1000000,
         lonDir: GNGLLmessageparsedByComma[4],
-        utc: Number (GNGLLmessageparsedByComma[5]),
+        utc: Number(GNGLLmessageparsedByComma[5]),
         dataStatus: GNGLLmessageparsedByComma[6],
         modeInd: GNGLLmessageparsedByComma[7]
     }
 
-    console.log(record)
-
-//Data ve formátu ve kterém se uloží do databáze
+    
+    //Data ve formátu ve kterém se uloží do databáze
     const data = {
-        "device":payloadFromDevice.ID,
+        "device": record[0].id,
         "latitude": payloadFromDevice.GNGLL.lat,
         "longitude": payloadFromDevice.GNGLL.lon,
         "bat": payloadFromDevice.battery,
@@ -95,15 +95,15 @@ export const POST = async ({ request }) => {
 
     try {
         //ukládání do databáze
-            const record = await pb.collection('devicesData').create(data); 
-
+        const record = await pb.collection('devicesData').create(data);
+        pb.authStore.clear();
         //pokud se data uloží vratí se status 200 OK    
-            return new Response(undefined, { status: 200 })        
+        return new Response(undefined, { status: 200 })
     } catch (error) {
         //pokud se data neuloží vrátí status 400 ERROR
-        return new Response(JSON.stringify(error), {status: 400});
+        return new Response(JSON.stringify(error), { status: 400 });
     }
 
 
-
+    return new Response(undefined, { status: 200 })
 }

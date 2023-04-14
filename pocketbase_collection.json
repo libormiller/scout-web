@@ -56,47 +56,6 @@
         }
     },
     {
-        "id": "g913t9wkklpnqmv",
-        "name": "devices",
-        "type": "base",
-        "system": false,
-        "schema": [
-            {
-                "id": "k9nk7atc",
-                "name": "deviceID",
-                "type": "number",
-                "system": false,
-                "required": false,
-                "unique": true,
-                "options": {
-                    "min": 0,
-                    "max": 255
-                }
-            },
-            {
-                "id": "wdzpeuy8",
-                "name": "user",
-                "type": "relation",
-                "system": false,
-                "required": true,
-                "unique": false,
-                "options": {
-                    "collectionId": "_pb_users_auth_",
-                    "cascadeDelete": false,
-                    "minSelect": null,
-                    "maxSelect": null,
-                    "displayFields": []
-                }
-            }
-        ],
-        "listRule": "@request.auth.id = user.id",
-        "viewRule": "@request.auth.id = user.id",
-        "createRule": "@request.auth.id != \"\" && @request.auth.id = @request.data.user",
-        "updateRule": "@request.auth.id = user.id",
-        "deleteRule": "@request.auth.id = user.id",
-        "options": {}
-    },
-    {
         "id": "ejttb02ksygsdmy",
         "name": "devicesData",
         "type": "base",
@@ -113,7 +72,7 @@
                     "collectionId": "g913t9wkklpnqmv",
                     "cascadeDelete": false,
                     "minSelect": null,
-                    "maxSelect": 1,
+                    "maxSelect": null,
                     "displayFields": [
                         "deviceID"
                     ]
@@ -166,6 +125,18 @@
                     "min": null,
                     "max": null
                 }
+            },
+            {
+                "id": "rbxm3rxx",
+                "name": "temp",
+                "type": "number",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {
+                    "min": null,
+                    "max": null
+                }
             }
         ],
         "listRule": "@request.auth.id = device.user.id",
@@ -173,6 +144,47 @@
         "createRule": "",
         "updateRule": "@request.auth.id = device.user.id",
         "deleteRule": "@request.auth.id = device.user.id",
+        "options": {}
+    },
+    {
+        "id": "g913t9wkklpnqmv",
+        "name": "devices",
+        "type": "base",
+        "system": false,
+        "schema": [
+            {
+                "id": "wdzpeuy8",
+                "name": "user",
+                "type": "relation",
+                "system": false,
+                "required": true,
+                "unique": false,
+                "options": {
+                    "collectionId": "_pb_users_auth_",
+                    "cascadeDelete": false,
+                    "minSelect": null,
+                    "maxSelect": null,
+                    "displayFields": []
+                }
+            },
+            {
+                "id": "sxwvb7s1",
+                "name": "deviceID",
+                "type": "number",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {
+                    "min": null,
+                    "max": null
+                }
+            }
+        ],
+        "listRule": "@request.auth.id = user.id || @request.auth.id = \"03tnjkcmh7wvg12\"",
+        "viewRule": "@request.auth.id = user.id",
+        "createRule": "@request.auth.id != \"\" && @request.auth.id = @request.data.user",
+        "updateRule": "@request.auth.id = user.id",
+        "deleteRule": "@request.auth.id = user.id",
         "options": {}
     }
 ]

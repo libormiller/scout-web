@@ -12,9 +12,9 @@ export const actions: Actions = {
       await locals.pb
         .collection('users')
         .authWithPassword(data.email, data.password)
-    } catch (e) {
-      console.error(e)
-      throw e
+    } catch (error) {
+      console.error(error)
+      throw error
     }
 
     throw redirect(303, '/dashboard/add-device')
