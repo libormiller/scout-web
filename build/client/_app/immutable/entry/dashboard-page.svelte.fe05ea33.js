@@ -1,1 +1,0 @@
-import{S as o,i,s as l}from"../chunks/index.7df24d5a.js";function r(e,t,s){let{data:a}=t;return console.log(a),e.$$set=n=>{"data"in n&&s(0,a=n.data)},[a]}class c extends o{constructor(t){super(),i(this,t,r,null,l,{data:0})}}export{c as default};

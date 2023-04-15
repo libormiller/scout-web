@@ -1,1 +1,0 @@
-import{p as e}from"./pocketbase.b37ce63f.js";const o=async({})=>({devices:await e.collection("devices").getFullList()}),c=Object.freeze(Object.defineProperty({__proto__:null,load:o},Symbol.toStringTag,{value:"Module"}));export{c as _,o as l};
