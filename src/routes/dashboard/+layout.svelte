@@ -2,10 +2,11 @@
   import { each, onMount, onDestroy } from "svelte/internal"
   import { pb } from "$lib/pocketbase"
 
-/* načtení dat z +Layout.ts ()*/
-export let data;
-let devices = data.devices;
+  
 
+
+  export let data;
+let devices = data.devices;
 pb.collection('devices').subscribe('*', function (e) {
     devices = [...devices, e.record]
   console.log(devices)
