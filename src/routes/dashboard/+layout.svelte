@@ -5,18 +5,25 @@
   
 
 
-  export let data;
+export let data;
 let devices = data.devices;
-pb.collection('devices').subscribe('*', function (e) {
-    devices = [...devices, e.record]
+let unsubscribe: () => void;
+
+
+onMount(async function () {
+  unsubscribe = await pb.collection('devices').subscribe('*', function (e) {
+    if (e.action === 'create') {
+      devices = [...devices, e.record]
+    }
   console.log(devices)
+})
 });
 
 
 
 
   onDestroy(() => {
-    pb.collection('devices').unsubscribe('*')
+    unsubscribe?.();
   })
 
 </script>
