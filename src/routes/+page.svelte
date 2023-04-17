@@ -1,9 +1,3 @@
-<script lang="ts">
-export let data;
-console.log(data.records)
-</script>
-
-
 <div class="text-2xl font-mono font-extrabold">
     Představení projektu:
 

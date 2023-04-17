@@ -1,5 +1,6 @@
 import { pb } from "$lib/pocketbase"
 
+
 /* Asynchronní funkce která načítá data z databáze */
 export const load = (async({}) => {
     
