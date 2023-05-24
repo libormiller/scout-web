@@ -29,16 +29,43 @@ type GNGLLmessage = {
     dataStatus: string,
     modeInd: string
 }
+
+function hex2bin(hex){
+    return (parseInt(hex, 16).toString(2)).padStart(8, '0');
+}
+
+function base64ToHex(str) {
+    const raw = atob(str);
+    let result = '';
+    for (let i = 0; i < raw.length; i++) {
+      const hex = raw.charCodeAt(i).toString(16);
+      result += (hex.length === 2 ? hex : '0' + hex);
+    }
+    return result.toUpperCase();
+  }
+
+
 //definice pro http metodu POST
 export const POST = async ({ request }) => {
     const authData = await pb.collection('users').authWithPassword(POCKETBASE_API_ID, POCKETBASE_API_PASSWD );
     let payloadFromDevice = {} as payloadData;
+
     let deviceData: jsonBodyFromGateway = await request.json()
     let arrayOfBytesBIN: number[] = [];
     let arrayOfGNGLL: string[] = [];
+    let helperHexToBin: string = "";
 
-    //odstraní případné mezery v binárním kódu 
-    deviceData.payload = deviceData.payload.replace(/\s/g, "")
+    //base64 na hex
+    deviceData.payload = base64ToHex(deviceData.payload)
+    console.log(deviceData.payload)
+
+    //hex na bin
+    deviceData.payload.match(/.{1,2}/g)?.forEach(function (hex) {
+        helperHexToBin += hex2bin(hex)
+    })
+
+    deviceData.payload = helperHexToBin
+    console.log(deviceData.payload)
 
     /* roztřízení dat po bytech do pole */
     const arrayOfBytesString = deviceData.payload.match(/.{1,8}/g)
@@ -67,7 +94,7 @@ export const POST = async ({ request }) => {
     const GNGLLmessageparsedByComma = arrayOfGNGLL.join("").split(",");
 
     const record = await pb.collection('devices').getFullList( 1, { filter: 'deviceID = '.concat(payloadFromDevice.ID.toString()) } );
-    console.log()
+    console.log(GNGLLmessageparsedByComma)
 
     //vložení GNGLL zprávy do náležitých proměnných
     payloadFromDevice.GNGLL = {
