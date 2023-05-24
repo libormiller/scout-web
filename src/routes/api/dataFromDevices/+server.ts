@@ -60,7 +60,7 @@ export const POST = async ({ request }) => {
     console.log(deviceData.payload)
 
     //hex na bin
-    deviceData.payload.match(/.{1,2}/g)?.forEach(function (hex) {
+    deviceData.payload.match(/.{1,1}/g)?.forEach(function (hex) {
         helperHexToBin += hex2bin(hex)
     })
 
