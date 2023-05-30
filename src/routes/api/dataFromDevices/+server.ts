@@ -60,11 +60,7 @@ export const POST = async ({ request }) => {
     console.log(deviceData.payload)
 
     //hex na bin
-    deviceData.payload.match(/.{1,1}/g)?.forEach(function (hex) {
-        helperHexToBin += hex2bin(hex)
-    })
-
-    deviceData.payload = helperHexToBin
+    deviceData.payload = hex2bin(deviceData.payload)
     console.log(deviceData.payload)
 
     /* roztřízení dat po bytech do pole */
