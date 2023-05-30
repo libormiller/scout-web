@@ -1,6 +1,5 @@
 import type { RequestHandler } from '@sveltejs/kit';
 import { pb } from "$lib/pocketbase"
-import { PUBLIC_POCKETBASE_URL } from '$env/static/public';
 import { POCKETBASE_API_ID, POCKETBASE_API_PASSWD } from '$env/static/private';
 
 //definice formátu pro data přicházející z gatewaye
