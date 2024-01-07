@@ -83,6 +83,6 @@
  
 </script>
 
-<div class="rounded-box p-2 bg-gradient-to-r from-indigo-500 to-fuchsia-500">
+<div class="rounded-box p-2 bg-gradient-to-r from-green-400 to-blue-500">
   <div class="absolute rounded-box" style="height: 82vh;" id="map" />
 </div>
