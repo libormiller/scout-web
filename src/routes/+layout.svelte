@@ -5,8 +5,8 @@
 </script>
 
 
-<div class="min-h-screen" >
-<div class="px-8 py-8 " >
+<div class="max-h-screen vlnka" >
+  <div class="px-8 py-8 " >
   <div class="navbar bg-base-200 rounded-lg shadow-xl max-w-full ">
     <div class="flex-1">
       <a href="/" class="btn btn-ghost text-xl font-bold">Project scout</a>
@@ -44,3 +44,16 @@
   <slot />
 </div>
 </div>
+
+<style>
+.vlnka {
+  aspect-ratio: 1980/1080;
+  width: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-image: url("./vlnka2transparent.svg");
+}
+
+
+</style>
