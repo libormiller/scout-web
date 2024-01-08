@@ -5,7 +5,7 @@
 </script>
 
 
-<div class="max-h-screen vlnka" >
+<div class="max-h-screen vlnka max-w-1920" >
   <div class="px-8 py-8 " >
   <div class="navbar bg-base-200 rounded-lg shadow-xl max-w-full ">
     <div class="flex-1">

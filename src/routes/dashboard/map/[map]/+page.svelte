@@ -7,15 +7,20 @@
   export let data
   let latestPosition: maptilersdk.LngLatLike
 
-
-    latestPosition = [
+try {
+  latestPosition = [
     Number(data.records[0].longitude),
     Number(data.records[0].latitude),
   ]
+} catch (error) {
+  console.log("data nenalezena")
+}
 
 
-  console.log(latestPosition)
 
+
+
+  
   type geojson = {
     name: 'Track'
     type: 'FeatureCollection'
@@ -46,6 +51,8 @@
     ],
   }
 
+
+
   data.records?.forEach(function (value) {
     const latitude: number = Number(value.latitude)
     const longitude: number = Number(value.longitude)
@@ -53,6 +60,7 @@
   })
 
   //console.log(mygeojson)
+
   onMount(() => {
     maptilersdk.config.apiKey = PUBLIC_MAP_TILER_KEY
     const map = new maptilersdk.Map({
